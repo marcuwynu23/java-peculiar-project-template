@@ -11,6 +11,9 @@ public class Main{
         });
     }
 }
+
+
+
 class SwingApplication extends JFrame{
     static class UI{
         private static final String TITLE = "Swing System Template";
