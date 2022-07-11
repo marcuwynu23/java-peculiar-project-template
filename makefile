@@ -1,57 +1,49 @@
-#Makefile for Java Project Building
-#main 
+# Manifest
+# MANIFEST_TYPE=Main-Class
+# MANIFEST_TYPE=Class-Path
+# MANIFEST_VALUE=com.peculiar.project1.Main
+# MANIFEST_VALUE=lib\peculiar-gui-v0.0.4.jar
+PACKAGE=com.peculiar.project1.view
+JAVA_FILE=Project1.java
+# class root folder
+CLASS_ROOT=com
+
+
+ICON=icon.png
+ICON_PATH=src\com\peculiar\ngita
+ICON_PACKAGE=com\peculiar\ngita
+
 all: compile-run clean-classes
 	echo done.
+
+
 compile-run:
 	echo Compiling...
 	jpb --compile
+	xcopy /Y $(ICON_PATH)\$(ICON) $(ICON_PACKAGE)
+	jar -uf dist\project.jar $(ICON_PACKAGE)\$(ICON)
 	echo Running Application...
 	jpb --run
 
-#adding new package and new class
-PACKAGE=com.peculiar.project-template
-JAVA_FILE=Main.java 
-add-new-package:
-	jpb --md $(PACKAGE)
-	echo done.
-add-new-class:
-	jpb --cf $(PACKAGE) $(JAVA_FILE)
-	echo done.
 
-#manifest Main-Class
-MAIN_ENTRY_POINT=Main.java
-MAIN_PACKAGE=com.peculiar.project-template
-MAIN_CLASS=Main-Class
-Main_CLASS_VALUE=com.peculiar.project-template.Main
-add-Main-Class: 
-	jpb --md $(MAIN_PACKAGE)
-	jpb --cf $(MAIN_PACKAGE) $(MAIN_ENTRY_POINT)
-	jpb --aim  $(MAIN_CLASS) $(Main_CLASS_VALUE)
-	echo done.
-# Manifest Class-Path
-MANIFEST_CLASS_PATH= 
-MANIFEST_CLASS_PATH_VALUE= 
-add-Class-Path:
-	jpb --aim $(MANIFEST_CLASS_PATH) $(MANIFEST_CLASS_PATH_VALUE)
-	echo done.
-# Author
-MANIFEST_AUTHOR=Author
-MANIFEST_AUTHOR_VALUE=Mark Wayne B. Menorca
-add-Author:
-	jpb --aim $(MANIFEST_AUTHOR) $(MANIFEST_AUTHOR_VALUE)
-	echo done.
-#testing
+
+add-to-Manifest:
+		jpb --aim  $(MANIFEST_TYPE) $(MANIFEST_VALUE)
+
+add-package:
+	jpb --md $(PACKAGE)
+
+add-class:
+	jpb --cf $(PACKAGE) $(JAVA_FILE)
+
 test:
 	jpb --test
-	echo done.
-#cleaning
-CLASS_ROOT=com
+
 clean-classes:
 	echo Cleaning class files...
 	rd /Q /S $(CLASS_ROOT)
-	echo done.
+
 clean:
 	echo Cleaning .jar and .exe..
 	del dist\*.exe
 	del dist\*.jar
-	echo done.
